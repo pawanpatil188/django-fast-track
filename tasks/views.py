@@ -1,7 +1,7 @@
-from django.http import HttpResponse
+
+from django.shortcuts import render
+from .models import Task
 
 def home(request):
-    return HttpResponse("""
-        <h1>My Django Task Manager</h1>
-        <p>Welcome! My first Django page is working.</p>
-    """)
+    tasks = Task.objects.all().order_by("-created_at")
+    return render(request, "tasks/home.html", {"tasks": tasks})

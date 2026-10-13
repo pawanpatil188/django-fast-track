@@ -1,0 +1,30 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Django Task App</title>
+    <link rel="stylesheet" href="{% static 'tasks/style.css' %}">
+</head>
+<body>
+    <h1>My Django Task App</h1>
+    <h2>My Tasks</h2>
+
+    {% for task in tasks %}
+        <div class="task">
+            <h3>{{ task.title }}</h3>
+            <p>{{ task.description }}</p>
+
+            {% if task.completed %}
+                <p>Status: Completed</p>
+            {% else %}
+                <p>Status: Pending</p>
+            {% endif %}
+        </div>
+    {% empty %}
+        <p>No tasks yet. Add one through Django Admin.</p>
+    {% endfor %}
+</body>
+</html>
