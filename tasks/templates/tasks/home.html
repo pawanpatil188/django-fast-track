@@ -10,6 +10,16 @@
 </head>
 <body>
     <h1>My Django Task App</h1>
+
+    <h2>Add a Task</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+        <input type="text" name="title" placeholder="Task title" required>
+        <textarea name="description" placeholder="Task description"></textarea>
+        <button type="submit">Add Task</button>
+    </form>
+
     <h2>My Tasks</h2>
 
     {% for task in tasks %}
@@ -17,14 +27,21 @@
             <h3>{{ task.title }}</h3>
             <p>{{ task.description }}</p>
 
-            {% if task.completed %}
-                <p>Status: Completed</p>
-            {% else %}
-                <p>Status: Pending</p>
-            {% endif %}
+            <p>Status:
+                {% if task.completed %}
+                    Completed
+                {% else %}
+                    Pending
+                {% endif %}
+            </p>
+
+            <form method="POST" action="{% url 'delete_task' task.id %}">
+                {% csrf_token %}
+                <button type="submit">Delete</button>
+            </form>
         </div>
     {% empty %}
-        <p>No tasks yet. Add one through Django Admin.</p>
+        <p>No tasks yet. Add your first task above!</p>
     {% endfor %}
 </body>
 </html>
