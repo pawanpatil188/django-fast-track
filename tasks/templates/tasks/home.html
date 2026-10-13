@@ -35,13 +35,39 @@
                 {% endif %}
             </p>
 
+        
+{% if not task.completed %}
+    <form method="POST" action="{% url 'complete_task' task.id %}">
+        {% csrf_token %}
+        <button type="submit">Mark Complete</button>
+    </form>
+{% else %}
+    <span>Completed ✓</span>
+{% endif %}
+
+
+            <!-- Edit link: opens the edit page for this task -->
+            <a href="{% url 'edit_task' task.id %}">Edit</a>
+
+            <!-- Delete form -->
             <form method="POST" action="{% url 'delete_task' task.id %}">
                 {% csrf_token %}
                 <button type="submit">Delete</button>
             </form>
+
+            {% if not task.completed %}
+    <form method="POST" action="{% url 'complete_task' task.id %}">
+        {% csrf_token %}
+        <button type="submit">Mark Completed</button>
+    </form>
+{% endif %}
+
         </div>
     {% empty %}
         <p>No tasks yet. Add your first task above!</p>
     {% endfor %}
+
+
+    
 </body>
 </html>
